@@ -1,17 +1,21 @@
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <% /*
     <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.0.js"> </script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
     
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.js"> </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> */ %>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
 
 </head>
 <style>
@@ -27,7 +31,6 @@
     html {
         height: 100%;
         /*Image only BG fallback*/
-
         /*background = gradient + image pattern combo*/
         background:
             linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
@@ -54,7 +57,6 @@
         box-sizing: border-box;
         width: 80%;
         margin: 0 10%;
-
         /*stacking fieldsets above each other*/
         position: relative;
     }
@@ -66,8 +68,7 @@
 
     /*inputs*/
     #msform input,
-    #msform textarea 
-    #msform select{
+    #msform textarea #msform select {
         padding: 15px;
         border: 1px solid #ccc;
         border-radius: 3px;
@@ -168,11 +169,12 @@
         background: #27AE60;
         color: greenyellow;
     }
+
     .payment-method {
-  display: flex;
-  margin-bottom: 60px;
-  justify-content: space-between;
-}
+        display: flex;
+        margin-bottom: 60px;
+        justify-content: space-between;
+    }
 </style>
 
 <body>
@@ -183,18 +185,18 @@
 
     <h1 class="text-center mb-3"><i class="fas fa-sign-in"></i>Register</h1>
     <% include ('partials/messages') %>
-    
+
 
 
     <%#   <div class="form-group"> %>
     <%# mutli Form %>
-    <form id="msform" action="/users/register" method="POST">
+    <form id="msform" action="/register" method="POST" >
         <div>
             <div style="width: 150px; float:left; height:50px; margin:10px">
                 Already a Member! </div>
             <div>
 
-                <a href="/users/login" style="width: 150px; float:right; height:50px; margin:10px"> Login
+                <a href="/login" style="width: 150px; float:right; height:50px; margin:10px"> Login
                     Now</a> </button>
 
             </div> <br />
@@ -208,18 +210,20 @@
             <h2 class="fs-title">Basic Information</h2>
             <h3 class="fs-subtitle"> Please fill the basic details</h3>
 
-            <input type="text" id="username" name="username" placeholder="Your Name" required="" class="form-control"
+            <input type="text" id="username" name="username" placeholder="Your Name" class="form-control"
                 value="<%= typeof name != 'undefined' ? name: '' %>"> <br />
 
-                   <input type="password" id="password" name="password" placeholder="Creat password" required=""
-                class="form-control " autocomplete="on"><br /> 
+            <input type="password" id="cpassword" name="cpassword" placeholder="Creat password" 
+                class="form-control " autocomplete="on"><br />
+                <input type="password" id="password" name="password" placeholder="Re-type password" 
+                class="form-control " autocomplete="on"><br />
 
-            <input type="text" id="company" name="company" placeholder="Your Company"  class="form-control"
-                value="<%= typeof company != 'undefined' ? company: '' %>"> <br />
+            <input type="text" id="company" name="company" placeholder="Your Company" class="form-control">
+                 <br />
 
 
-            <select id="industrys" type="text" name="industry" placeholder="Your Industry" 
-                class="form-control"> Your Industry
+            <select id="industry" type="text" name="industry" placeholder="Your Industry" class="form-control"> Your
+                Industry
                 <option value="industry"> Your Industry</option>
                 <option value="Finance"> Finance</option>
                 <option value="Managememnt"> Managememnt</option>
@@ -227,18 +231,17 @@
                 <option value="IT"> IT </option>
             </select> <br />
 
-            <input type="text" id="hear" name="hear" placeholder="How did you hear about us" 
-                class="form-control" value="<%= typeof hear != 'undefined' ? hear: '' %>"> <br />
+            <input type="text" id="hear" name="hear" placeholder="How did you hear about us" class="form-control"
+                > <br />
 
-            <input type="email" id="email" name="email" placeholder="E-mail"  class="form-control"
-                value="<%= typeof email != 'undefined' ? email: '' %>"> <br />
+            <input type="email" id="email" name="email" placeholder="E-mail" class="form-control"
+                > <br />
 
-            <input type="tel" id="phone" name="phone" placeholder="Phonenumber" 
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"
-                value="<%= typeof phone != 'undefined' ? phone: '' %>"> <br />
+            <input type="tel" id="phone" name="phone" placeholder="Phonenumber" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                class="form-control" > <br />
 
-            <input type="text" name="track" placeholder="Which website you want to track" 
-                class="form-control"><br />
+            <input type="text" name="track" placeholder="Which website you want to track" class="form-control"><br />
+            <button type="submit" value="submit" class="submit action-button"> Submit </button>
             <input type="button" name="next" class="next action-button" value="Next">
             </button>
         </fieldset>
@@ -250,17 +253,17 @@
             <h3 class="fs-subtitle"> Please fill the payment details</h3>
 
 
-            <input type="text" name="coupon" placeholder="Coupon code"  class="form-control"><br />
+            <input type="text" name="coupon" placeholder="Coupon code" class="form-control"><br />
 
-            <input type="text" name="name" placeholder="Name"  class="form-control"><br />
+            <input type="text" name="name" placeholder="Name" class="form-control"><br />
 
-            <input type="text" name="address" placeholder="Address"  class="form-control"><br />
+            <input type="text" name="address" placeholder="Address" class="form-control"><br />
 
             <div class="btn-group btn-group-inline">
                 <button class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">City
                     <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu btn-block" >
+                <ul class="dropdown-menu btn-block">
                     <li><a href="#">Reason 1</a></li>
                     <li><a href="#">Reason 2</a></li>
                     <li><a href="#">Reason 3</a></li>
@@ -302,64 +305,36 @@
 
             </div>
 
-            <input type="checkbox" value="agree" id="agree" display="flex" margin-bottom="auto" justify-content= "space-between" required="">
-                I agree with <a href=""> tearms and conditions</a><br/>
+            <input type="checkbox" value="agree" id="agree" display="flex" margin-bottom="auto"
+                justify-content="space-between" >
+            I agree with <a href=""> tearms and conditions</a><br />
 
 
             <button type="submit" value="submit" class="submit action-button"> Submit </button>
-   
 
 
-    </fieldset>
+
+        </fieldset>
     </form>
 
 
 
 
     <script>
-        const form = document.getElementById('msform')
-        form.addEventListener('submit', registerUser)
+       /*
 
-			async function registerUser(event) {
-				event.preventDefault()
-				const username = document.getElementById('name').value
-				const password = document.getElementById('password').value
-
-				const result = await fetch('/user/register', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						username,
-						password
-					})
-				}).then((res) => res.json())
-
-				if (result.status === 'ok') {
-					// everythign went fine
-					alert('Success')
-				} else {
-					alert(result.error)
-				}
-			}
-		
         //jQuery time
         var current_fs, next_fs; //fieldsets
-        const slidePage = document.querySelector(".silde-page");
-        var left, opacity, scale; //fieldset properties which we will animate
-        var animating; //flag to prevent quick multi-click glitches
 
+       var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
         $(".next").click(function () {
             if (animating) return false;
             animating = true;
-
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
-
             //activate next step on progressbar using the index of next_fs
             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
             //show the next fieldset
             next_fs.show();
             //hide the current fieldset with style
@@ -388,17 +363,23 @@
                     current_fs.hide();
                     animating = false;
                 },
-                //this comes from the custom easing plugin
+
                 easing: 'easeInOutBack'
             });
         });
 
-       
-
         $(".submit").click(function () {
             return false;
-        })
-    </script>
+        }) 
+
+        $(document).ready(function(){
+    		
+            $(" .next").click(function(){
+                $(this).parents(".form-box").fadeOut('fast');
+                $(this).parents(".form-box").next().fadeIn('fast');
+            });
+        }) */
+    </script> 
 
 
 

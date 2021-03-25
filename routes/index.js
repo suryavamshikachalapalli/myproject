@@ -5,7 +5,7 @@ const router = express.Router();
 
 //index
 //router.get('/' ,(req,res) => res.send('welcome to home page'))
-router.get('/', (req,res) => res.render('index'));
+router.get('/', (req,res) => res.render('login'));
 
 
 

@@ -1,0 +1,376 @@
+//jQuery time
+        var current_fs, next_fs; //fieldsets
+        const slidePage = document.querySelector(".silde-page");
+        var left, opacity, scale; //fieldset properties which we will animate
+        var animating; //flag to prevent quick multi-click glitches
+
+        $(".next").click(function () {
+            if (animating) return false;
+            animating = true;
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //activate next step on progressbar using the index of next_fs
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({
+                opacity: 0
+            }, {
+                step: function (now, mx) {
+                    //as the opacity of current_fs reduces to 0 - stored in "now"
+                    //1. scale current_fs down to 80%
+                    scale = 1 - (1 - now) * 0.2;
+                    //2. bring next_fs from the right(50%)
+                    left = (now * 50) + "%";
+                    //3. increase opacity of next_fs to 1 as it moves in
+                    opacity = 1 - now;
+                    current_fs.css({
+                        'transform': 'scale(' + scale + ')',
+                        'position': 'absolute'
+                    });
+                    next_fs.css({
+                        'left': left,
+                        'opacity': opacity
+                    });
+                },
+                duration: 800,
+                complete: function () {
+                    current_fs.hide();
+                    animating = false;
+                },
+                //this comes from the custom easing plugin
+                easing: 'easeInOutBack'
+            });
+        });
+
+       
+
+        $(".submit").click(function () {
+            return false;
+        })
+    </script>
+
+    <ul id="progressbar">
+        <li class="active">Basic Information</li>
+        <li>Billing Info</li>
+    </ul>
+
+    <fieldset>
+        <h2 class="fs-title">Basic Information</h2>
+        <h3 class="fs-subtitle"> Please fill the basic details</h3>
+
+        <input type="text" id="username" name="username" placeholder="Your Name" required="" class="form-control"
+            value="<%= typeof name != 'undefined' ? name: '' %>"> <br />
+
+               <input type="password" id="password" name="password" placeholder="Creat password" required=""
+            class="form-control " autocomplete="on"><br /> 
+
+        <input type="text" id="company" name="company" placeholder="Your Company"  class="form-control"
+            value="<%= typeof company != 'undefined' ? company: '' %>"> <br />
+
+
+        <select id="industrys" type="text" name="industry" placeholder="Your Industry" 
+            class="form-control"> Your Industry
+            <option value="industry"> Your Industry</option>
+            <option value="Finance"> Finance</option>
+            <option value="Managememnt"> Managememnt</option>
+            <option value="Sales"> Sales</option>
+            <option value="IT"> IT </option>
+        </select> <br />
+
+        <input type="text" id="hear" name="hear" placeholder="How did you hear about us" 
+            class="form-control" value="<%= typeof hear != 'undefined' ? hear: '' %>"> <br />
+
+        <input type="email" id="email" name="email" placeholder="E-mail"  class="form-control"
+            value="<%= typeof email != 'undefined' ? email: '' %>"> <br />
+
+        <input type="tel" id="phone" name="phone" placeholder="Phonenumber" 
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"
+            value="<%= typeof phone != 'undefined' ? phone: '' %>"> <br />
+
+        <input type="text" name="track" placeholder="Which website you want to track" 
+            class="form-control"><br />
+        <input type="button" name="next" class="next action-button" value="Next">
+        </button>
+    </fieldset>
+
+    <%# payment %>
+
+    <fieldset>
+        <h2 class="fs-title">Payment Information</h2>
+        <h3 class="fs-subtitle"> Please fill the payment details</h3>
+
+
+        <input type="text" name="coupon" placeholder="Coupon code"  class="form-control"><br />
+
+        <input type="text" name="name" placeholder="Name"  class="form-control"><br />
+
+        <input type="text" name="address" placeholder="Address"  class="form-control"><br />
+
+        <div class="btn-group btn-group-inline">
+            <button class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">City
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu btn-block" >
+                <li><a href="#">Reason 1</a></li>
+                <li><a href="#">Reason 2</a></li>
+                <li><a href="#">Reason 3</a></li>
+            </ul>
+        </div>
+
+        <div class="btn-group btn-group-inline">
+            <button class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">State
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu btn-block">
+                <li><a href="#">Reason 5</a></li>
+                <li><a href="#">Reason 6</a></li>
+                <li><a href="#">Reason 7</a></li>
+            </ul>
+        </div>
+
+        <div class="btn-group btn-group-inline">
+            <button class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">Zip
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu btn-block">
+
+            </ul>
+        </div> <br />
+
+        <input type="text" name="card" placeholder="Name of the card holder" class="form-control"><br />
+
+        <div class="payment-method">
+
+            <input id="silver" class="radio-inline" type="radio" name="payment">
+            Silver Member
+
+            <input id="gold" class="radio-inline" type="radio" name="payment">
+            Gold Member
+
+            <input id="platinum" class="radio-inline" type="radio" name="payment">
+            Platimun member
+
+        </div>
+
+        <input type="checkbox" value="agree" id="agree" display="flex" margin-bottom="auto" justify-content= "space-between" required="">
+            I agree with <a href=""> tearms and conditions</a><br/>
+
+
+        <button type="submit" value="submit" class="submit action-button"> Submit </button>
+
+
+
+
+
+
+        <h4>Payment Detail</h4>
+        <form action="">
+            <div class="form-group">
+                <label for="">Coupon code</label>
+            <input type="text" name="coupon" placeholder="Coupon code" class="form-control"><br />
+
+            <div class="form-group">
+                <label for="">Name</label>
+                <input type="text" name="name" placeholder="Name" class="form-control"><br />
+            </div>
+
+
+            <div class="form-group">
+                <label for="">Address</label>
+                <input type="text" name="address" placeholder="Address" class="form-control"><br />
+            </div>
+
+            <div class="form-group">
+                <label for="">Country</label>
+                <input type="text" name="" placeholder="Country" id="" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">State</label>
+                <input type="text" name="" placeholder="State" id="" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">City</label>
+                <input type="text" name="" placeholder="City" id="" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="">Phone</label>
+                <input type="text" name="" placeholder="Phone" id="" class="form-control">
+            </div>
+
+
+            <div class="payment-method">
+
+                <input id="silver" class="radio-inline" type="radio" name="payment">
+                Silver Member
+
+                <input id="gold" class="radio-inline" type="radio" name="payment">
+                Gold Member
+
+                <input id="platinum" class="radio-inline" type="radio" name="payment">
+                Platimun member
+
+            </div>
+
+            <input type="checkbox" value="agree" id="agree" display="flex" margin-bottom="auto"
+                justify-content="space-between" required="">
+            I agree with <a href=""> tearms and conditions</a><br />
+
+</fieldset>
+</form>
+
+/*basic reset*/
+* {
+    margin: 110;
+    padding: 110;
+}
+
+html {
+    height: 100%;
+    /*Image only BG fallback*/
+
+    /*background = gradient + image pattern combo*/
+    background:
+        linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+}
+
+body {
+    font-family: montserrat, arial, verdana;
+}
+
+/*form styles*/
+#msform {
+    width: 1000px;
+    margin: 50px auto;
+    text-align: center;
+    position: relative;
+}
+
+#msform fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 3px;
+    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    width: 80%;
+    margin: 0 10%;
+
+    /*stacking fieldsets above each other*/
+    position: relative;
+}
+
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+    display: none;
+}
+
+/*inputs*/
+#msform input,
+#msform textarea 
+#msform select{
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: montserrat;
+    color: #2C3E50;
+    font-size: 13px;
+}
+
+/*buttons*/
+#msform .action-button {
+    width: 100px;
+    background: #27AE60;
+    font-weight: bold;
+    color: white;
+    border: 0 none;
+    border-radius: 1px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin: 10px 5px;
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+}
+
+/*headings*/
+.fs-title {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #2C3E50;
+    margin-bottom: 10px;
+}
+
+.fs-subtitle {
+    font-weight: normal;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/*progressbar*/
+#progressbar {
+    margin-bottom: 30px;
+    overflow: visible;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+}
+
+#progressbar li {
+    list-style-type: none;
+    color: green;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+}
+
+#progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 20px;
+    line-height: 20px;
+    display: block;
+    font-size: 10px;
+    color: greenyellow;
+    background: yellowgreen;
+    border-radius: 3px;
+    margin: 0 auto 5px auto;
+}
+
+/*progressbar connectors*/
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: yellowgreen;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1;
+    /*put it behind the numbers*/
+}
+
+#progressbar li:first-child:after {
+    /*connector not needed before the first step*/
+    content: none;
+}
+
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,
+#progressbar li.active:after {
+    background: #27AE60;
+    color: greenyellow;
+}
