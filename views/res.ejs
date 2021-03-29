@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Montserrat";
+}
+section {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aliceblue;
+}
+.container {
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  box-shadow: 0px 0px 20px #00000020;
+  border-radius: 8px;
+  background-color: white;
+}
+.step {
+  display: none;
+}
+.step.active {
+  display: block;
+}
+.form-group {
+  width: 100%;
+  margin-top: 20px;
+}
+.form-group input {
+  width: 100%;
+  border: 1.5px solid rgba(128, 128, 128, 0.418);
+  padding: 5px;
+  font-size: 18px;
+  margin-top: 5px;
+  border-radius: 4px;
+}
+
+button.next-btn,
+button.previous-btn,
+button.submit-btn {
+  float: right;
+  margin-top: 20px;
+  padding: 10px 30px;
+  border: none;
+  outline: none;
+  background-color: rgb(242, 246, 250);
+  font-family: "Montserrat";
+  font-size: 18px;
+  cursor: pointer;
+  /* text-align: right; */
+}
+button.previous-btn {
+  float: left;
+}
+button.submit-btn {
+  background-color: aquamarine;
+}
+
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            
+            <form  action="/res" method="POST">
+      
+            <div class="step step-1 active">
+                <input type="text" id="username" name="username" placeholder="Your Name"
+                class="form-control" value="<%= typeof name != 'undefined' ? name: '' %>"> <br />
+
+            <input type="password" id="password" name="password" placeholder="Creat password"
+                class="form-control " autocomplete="on"><br />
+            <input type="password" id="cpassword" name="cpassword" placeholder="Retype password"
+                class="form-control " autocomplete="on"><br />
+
+            <input type="text" id="company" name="company" placeholder="Your Company"
+                class="form-control">
+            <br />
+
+
+            <select id="industry" type="text" name="industry" placeholder="Your Industry"
+                class="form-control"> Your
+                Industry
+                <option value="industry"> Your Industry</option>
+                <option value="Finance"> Finance</option>
+                <option value="Managememnt"> Managememnt</option>
+                <option value="Sales"> Sales</option>
+                <option value="IT"> IT </option>
+            </select> <br />
+
+            <input type="text" id="hear" name="hear" placeholder="How did you hear about us"
+                class="form-control"> <br />
+
+            <input type="email" id="email" name="email" placeholder="E-mail" class="form-control">
+            <br />
+
+            <input type="tel" id="phone" name="phone" placeholder="Phonenumber"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"> <br />
+
+            <input type="text" name="track" placeholder="Which website you want to track"
+                class="form-control"><br />
+
+
+              <button type="button" class="next-btn">Next</button>
+            </div>
+      
+            <div class="step step-2">
+              <div class="form-group">
+                <input type="text" name="coupon" placeholder="Coupon code" class="form-control"><br />
+
+								<input type="text" name="uname" placeholder="username" class="form-control"><br />
+
+								<input type="text" name="address" placeholder="Address" class="form-control"><br />
+
+								
+									City: <select name="city" id="city">
+										<option value="" selected="selected">Select the city</option>
+									</select>
+
+									State: <select name="state" id="state">
+										<option value="" selected="selected">Please select state </option>
+									</select>
+
+									Zip: <select name="zip" id="zip">
+										<option value="" selected="selected"> Zip Code</option>
+									</select>
+									<br><br/>
+									
+						
+
+						<input type="text" name="card" placeholder="Name of the card holder" class="form-control"><br />
+
+						<div class="payment-method">
+
+							<input id="silver" class="radio-inline" type="radio" name="payment">
+							Silver Member
+
+							<input id="gold" class="radio-inline" type="radio" name="payment">
+							Gold Member
+
+							<input id="platinum" class="radio-inline" type="radio" name="payment">
+							Platimun member
+
+						</div>
+
+						<input type="checkbox" value="agree" id="agree" display="flex" margin-bottom="auto"
+							justify-content="space-between">
+						I agree with <a href=""> tearms and conditions</a><br />
+              
+      
+            
+              <button type="button" class="previous-btn">Prev</button>
+              <button type="submit" class="submit-btn">Submit</button>
+            </div>
+            <div>
+                <span>Already Member! <a href="/login">Login</a></span>
+            </div>
+            <div id="LangTable"><a href="/login" id="aa"></a>
+            </div>
+      
+          </form>
+        </div>
+      </section>
+</body>
+<script>
+    const steps = Array.from(document.querySelectorAll("form .step"));
+const nextBtn = document.querySelectorAll("form .next-btn");
+const prevBtn = document.querySelectorAll("form .previous-btn");
+const form = document.querySelector("form");
+
+nextBtn.forEach((button) => {
+  button.addEventListener("click", () => {
+    changeStep("next");
+  });
+});
+prevBtn.forEach((button) => {
+  button.addEventListener("click", () => {
+    changeStep("prev");
+  });
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const inputs = [];
+  form.querySelectorAll("input").forEach((input) => {
+    const { name, value } = input;
+    inputs.push({ name, value });
+  });
+  console.log(inputs);
+  form.reset();
+});
+
+function changeStep(btn) {
+  let index = 0;
+  const active = document.querySelector(".active");
+  index = steps.indexOf(active);
+  steps[index].classList.remove("active");
+  if (btn === "next") {
+    index++;
+  } else if (btn === "prev") {
+    index--;
+  }
+  steps[index].classList.add("active");
+}
+
+</script>
+</html>

@@ -1,0 +1,16 @@
+0: {name: "username", value: "abc"}
+1: {name: "password", value: "aa"}
+2: {name: "cpassword", value: "aa"}
+3: {name: "company", value: "abc"}
+4: {name: "hear", value: "fb"}
+5: {name: "email", value: "abc@gmail.com"}
+6: {name: "phone", value: "123-456-7890"}
+7: {name: "track", value: "iv"}
+8: {name: "coupon", value: "666"}
+9: {name: "uname", value: "ansh"}
+10: {name: "address", value: "2701 SW BOILERMAKER RD#33"}
+11: {name: "card", value: "ansh"}
+12: {name: "payment", value: "on"}
+13: {name: "payment", value: "on"}
+14: {name: "payment", value: "on"}
+15: {name: "", value: "agree"

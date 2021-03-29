@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MYAPP</title>
+    <style>
+      
+		body {
+			width: 100%;
+			height: 100%;
+
+			background: white;
+
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7abcff', endColorstr='#4096ee', GradientType=1);
+		}
+
+		.container {
+			margin-top: 100px;
+			margin-bottom: 100px;
+      max-width: 610px;
+			margin: 0 auto;
+      display: table;
+			margin: auto;
+			padding-left: 0;
+			overflow: hidden;
+			margin-bottom: 5px;
+		}
+    </style>
+</head>
+<body>
+    <form action="/login" method="POST">
+        <div class="container">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="email">
+          <div id="email" class="form-text"></div>
+       
+        
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password">
+      
+        
+          <input type="checkbox" class="form-check-input" id="checkbox">
+          <label class="form-check-label" for="checkbox">Remember me</label>
+       
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+     
+                                    <a href="/reset"> Forgot password?</a>
+                                </div>
+                                
+                            </div>
+
+                        <button type="submit" value="submit" class="btn btn-success btn-block"> Login </button>
+                        <span>Don't have an account!  <a href="/res" >Register</a></span>
+      </form>
+</body>
+</html>

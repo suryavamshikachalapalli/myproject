@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MYAPP</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+	<style>
+		body {
+			width: 100%;
+			height: 100%;
+
+			background: white;
+
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7abcff', endColorstr='#4096ee', GradientType=1);
+		}
+
+		.container {
+			margin-top: 100px;
+			margin-bottom: 100px;
+		}
+
+		.multistep-container {
+			max-width: 610px;
+			margin: 0 auto;
+		}
+
+		.multistep-container .active-button {
+			display: table;
+			margin: auto;
+			padding-left: 0;
+			overflow: hidden;
+			margin-bottom: 5px;
+		}
+
+		.multistep-container .active-button li {
+			display: inline-block;
+			width: 180px;
+		}
+
+		.multistep-container .active-button li .round-btn {
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			background-color: rgb(204, 204, 204);
+			display: block;
+			color: #000;
+			text-align: center;
+			font-family: 'poppins';
+			font-weight: 500;
+			line-height: 30px;
+			max-width: 100%;
+			margin: auto;
+			position: relative;
+			z-index: 1;
+		}
+
+		.multistep-container .active-button li.active .round-btn {
+			background-color: pink;
+			color: var(--white);
+		}
+
+		.multistep-container .active-button li:not(:first-child) .round-btn:before {
+			position: absolute;
+			content: '';
+			width: 154px;
+			height: 3px;
+			background-color: palevioletred;
+			left: -154px;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: -1;
+		}
+
+		.multistep-container .active-button li.active:not(:first-child) .round-btn:before {
+			background-color: pink
+		}
+
+		.multistep-container .mutistep-form-area {
+			background-color: var(--white);
+			margin-top: 30px;
+			box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+			position: relative;
+			overflow: hidden;
+			min-height: 544px;
+			max-height: 1000px;
+		}
+
+		.multistep-container .mutistep-form-area .form-box {
+			position: absolute;
+			top: 25px;
+			left: 25px;
+			bottom: 50px;
+		}
+
+		.multistep-container .mutistep-form-area .form-box h4 {
+			font-family: 'montserrat';
+			font-weight: 600;
+			text-transform: uppercase;
+			font-size: 20px;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		.multistep-container .mutistep-form-area .form-box label {
+			font-family: 'roboto';
+			font-weight: 500;
+			font-size: 15px;
+		}
+
+		.multistep-container .mutistep-form-area .form-box:nth-child(2),
+		.multistep-container .mutistep-form-area .form-box:nth-child(3) {
+			display: none;
+		}
+
+		.multistep-container .mutistep-form-area .form-box .button-row .next,
+		.multistep-container .mutistep-form-area .form-box .button-row .previous,
+		.multistep-container .mutistep-form-area .form-box .button-row .submit {
+			background-color: palevioletred;
+			border: 0;
+			box-shadow: none;
+			padding: 7px 30px;
+			min-width: 100px;
+			border-radius: 20px;
+			color: var(--white);
+			font-family: 'roboto';
+			font-weight: 500;
+		}
+
+		.multistep-container .mutistep-form-area .form-box .button-row .submit {
+			background-color: palevioletred;
+		}
+
+		.multistep-container .mutistep-form-area .form-box .button-row {
+			display: table;
+			margin: auto;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-auto">
+
+				<div class="multistep-container">
+
+					<div class="mutistep-form-area">
+
+
+						<div class="form-box">
+
+
+							<ul class="active-button">
+								<li class="active">
+									<span class="round-btn">1</span>
+								</li>
+								<li>
+									<span class="round-btn">2</span>
+								</li>
+
+							</ul>
+							<!--  -->
+
+
+							<h3> Basic Information</h3>
+							<h4>Please fill the required details</h4>
+							<form  action="/signup" method="POST">
+
+
+
+								<input type="text" id="username" name="username" placeholder="Your Name"
+									class="form-control" value="<%= typeof name != 'undefined' ? name: '' %>"> <br />
+
+								<input type="password" id="password" name="password" placeholder="Creat password"
+									class="form-control " autocomplete="on"><br />
+								<input type="password" id="cpassword" name="cpassword" placeholder="Retype password"
+									class="form-control " autocomplete="on"><br />
+
+								<input type="text" id="company" name="company" placeholder="Your Company"
+									class="form-control">
+								<br />
+
+
+								<select id="industry" type="text" name="industry" placeholder="Your Industry"
+									class="form-control"> Your
+									Industry
+									<option value="industry"> Your Industry</option>
+									<option value="Finance"> Finance</option>
+									<option value="Managememnt"> Managememnt</option>
+									<option value="Sales"> Sales</option>
+									<option value="IT"> IT </option>
+								</select> <br />
+
+								<input type="text" id="hear" name="hear" placeholder="How did you hear about us"
+									class="form-control"> <br />
+
+								<input type="email" id="email" name="email" placeholder="E-mail" class="form-control">
+								<br />
+
+								<input type="tel" id="phone" name="phone" placeholder="Phonenumber"
+									pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"> <br />
+
+								<input type="text" name="track" placeholder="Which website you want to track"
+									class="form-control"><br />
+
+
+								<div class="button-row">
+									<input type="button" value="Next" class="next">
+									
+										
+									
+								</div>
+
+						</form> 
+
+						</div>
+						<!--  -->
+						
+						<!--  -->
+						<div class="form-box">
+
+							<!--  -->
+							<ul class="active-button">
+								<li class="active">
+									<span class="round-btn">1</span>
+								</li>
+								<li class="active">
+									<span class="round-btn">2</span>
+								</li>
+
+							</ul>
+							<!--  -->
+
+							<h2>Payment Information</h2>
+							<h3 class> Please fill the payment details</h3>
+							<form  action="/signup" method="POST">
+
+
+
+								<input type="text" name="coupon" placeholder="Coupon code" class="form-control"><br />
+
+								<input type="text" name="uname" placeholder="username" class="form-control"><br />
+
+								<input type="text" name="address" placeholder="Address" class="form-control"><br />
+
+								
+									City: <select name="city" id="city">
+										<option value="" selected="selected">Select the city</option>
+									</select>
+
+									State: <select name="state" id="state">
+										<option value="" selected="selected">Please select state </option>
+									</select>
+
+									Zip: <select name="zip" id="zip">
+										<option value="" selected="selected"> Zip Code</option>
+									</select>
+									<br><br/>
+									
+						
+
+						<input type="text" name="card" placeholder="Name of the card holder" class="form-control"><br />
+
+						<div class="payment-method">
+
+							<input id="silver" class="radio-inline" type="radio" name="payment">
+							Silver Member
+
+							<input id="gold" class="radio-inline" type="radio" name="payment">
+							Gold Member
+
+							<input id="platinum" class="radio-inline" type="radio" name="payment">
+							Platimun member
+
+						</div>
+
+						<input type="checkbox" value="agree" id="agree" display="flex" margin-bottom="auto"
+							justify-content="space-between">
+						I agree with <a href=""> tearms and conditions</a><br />
+
+
+						<div class="button-row">
+							
+							
+								<input type="button" value="Previous" class="previous">
+								<input type="submit" value="Submit" class="submit">
+							
+						</div>
+
+						</form>
+
+					</div> 
+
+
+					
+
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+	</div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script>
+
+		$(document).ready(function () {
+
+			$(".multistep-container .form-box .button-row .next").click(function () {
+				$(this).parents(".form-box").fadeOut('fast');
+				$(this).parents(".form-box").next().fadeIn('fast');
+			});
+			$(".multistep-container .form-box .button-row .previous").click(function () {
+				$(this).parents(".form-box").fadeOut('fast');
+				$(this).parents(".form-box").prev().fadeIn('fast');
+			});
+
+		});
+/*
+	 const form = document.getElementById('signup-form')
+			form.addEventListener('next','submit', signupUser)
+
+			async function registerUser(event) {
+				event.preventDefault()
+				const username = document.getElementById('username').value
+				const password = document.getElementById('password').value
+
+				const result = await fetch('/api/signup', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						username,
+						password
+					})
+				}).then((res) => res.json())
+
+				if (result.status === 'ok') {
+					// everythign went fine
+					alert('Success')
+				} else {
+					alert(result.error)
+				}
+			} */ 
+	</script>
+
+</body>
+
+</html>
+
+</body>
+
+</html>
