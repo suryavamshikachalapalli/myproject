@@ -74,30 +74,42 @@ app.get('/res', (req,res)=>{res.render('res') }),
 
  app.post('/res', (req,res)=>{
             console.log('signup page')      
-        
-                            const data =
+            username = req.body.username;
+            password = req.body.password;
+            cpassword = req.body.cpassword;
+            company = req.body.company;
+            industry = req.body.industry;
+            hear = req.body.hear;
+            email = req.body.email;
+            phone = req.body.phone;
+            track = req.body.track;
+            coupon = req.body.coupon; 
+            uname = req.body.uname;
+            address = req.body.address; 
+            card = req.body.card
+                            const user =
                             {
-                                username: req.body.username,
-                                password: req.body.password,
-                                cpassword: req.body.cpassword,
-                                company: req.body.company,
-                                industry: req.body.industry,
-                                hear: req.body.hear,
-                                email: req.body.email,
-                                phone: req.body.phone,
-                                track: req.body.track,
-                                coupon: req.body.coupon, 
-                                uname: req.body.uname,
-                                address: req.body.address, 
-                                card: req.body.card
+                               "username": username,
+                                "password": password,
+                                "cpassword": cpassword,
+                                "company": company,
+                                "industry": industry,
+                                "hear": hear,
+                                "email": email,
+                                "phone": phone,
+                                "track": track,
+                                "coupon": coupon,
+                                "uname": uname,
+                                "address": address,
+                                "card": card
         
                             }
-                            db.collection('user').insertOne(data,(err,collection) => {
+                            db.collection('user').insertOne(user,(err,collection) => {
                                 if(err){
                                     throw err;
                                 }
                                 console.log("collection created with records")
-                                console.log(data)
+                                console.log(user)
                             });
                             return res.redirect('/login')
                             
