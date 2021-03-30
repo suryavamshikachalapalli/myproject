@@ -1,8 +1,17 @@
+require('dotenv').config()
+  
+
 const express = require('express')
 const assert = require('assert')
 const mongooes = require('mongoose')
 const mongodb = require('mongodb')
 const bcrypt = require('bcrypt')
+const passport = require('passport')
+const session = require('express-session')
+const flash = require('express-flash')
+
+
+
 //APP INITILIZATION
 const app = express();
 
@@ -25,9 +34,24 @@ const User = require("./models/users");
 //json
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
+//passport PASPORT
+const initializePassport = require('./passport')
+
+initializePassport(passport, 
+    email => users.find(user => user.email === email),
+    id => users.find(users => user.id === id))
 
 // view engine , ejs
 app.set('view engine' ,'ejs') 
+app.use(express.urlencoded({extended : false}))
+app.use(flash())
+app.use(session({
+    secret : process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized:false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 //routes
 app.get('/', (req,res)=>{
@@ -38,15 +62,21 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
-app.get('/res', (req,res)=>{
-        res.render('res') })
+app.post('/login', passport.authenticate('local',{
+    successRedirect:'/logout',
+    failureRedirect:'/login',
+    failureFlash: true
+}),
+
+
+//res handler
+app.get('/res', (req,res)=>{res.render('res') }),
 
  app.post('/res', (req,res)=>{
-            console.log('signup page')
-            
-                             
+            console.log('signup page')      
         
-                            var data = {
+                            const data =
+                            {
                                 username: req.body.username,
                                 password: req.body.password,
                                 cpassword: req.body.cpassword,
@@ -67,20 +97,14 @@ app.get('/res', (req,res)=>{
                                     throw err;
                                 }
                                 console.log("collection created with records")
+                                console.log(data)
                             });
                             return res.redirect('/login')
-                            console.log(data)
-                        })
-/*
-app.post('/login',  
-        passport.authenticate('local', {
-          successRedirect: '/logout',
-          failureRedirect: '/login',
-          //failureFlash: true
-        }), 
-        //function(req, res) {}
-      );
-*/
+                            
+                        }),
+                       
+)
+
 //sign handler
 /*
 app.get('/signup', (req,res)=>{
@@ -157,5 +181,8 @@ app.post('/signup', async(req,res)=>{
 //})
 
 //APP LISTENING TO PORT
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT , console.log(`server started on port` , {PORT}));
+
+//app.listen(3001)

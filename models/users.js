@@ -51,8 +51,18 @@ const userSchema  = new mongoose.Schema({
         required: true
       },
       address: {
+        city:{
         type: String,
         required: true
+        },
+        state:{
+          type: String,
+          required: true
+          },
+          zip:{
+            type: String,
+            required: true
+            }
       },
       card: {
         type: String,

@@ -11,65 +11,19 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+    // Create a new user
+    app.post('/users', users.create);
 
-// Getting One
-router.get('/:id', getUser, (req, res) => {
-  res.json(res.Users)
-})
+    // Retrieve all users
+    app.get('/users', users.findAll);
 
-// Creating one
-router.post('/', async (req, res) => {
-  const Users = new Users({
-    name: req.body.name,
-    signedup: req.body.signedup
-  })
-  try {
-    const newSubscriber = await Users.save()
-    res.status(201).json(newSubscriber)
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
-})
+    // Retrieve a single user 
+    app.get('/user/:userId', users.findOne);
 
-// Updating One
-router.patch('/:id', getUsers, async (req, res) => {
-  if (req.body.name != null) {
-    res.Users.name = req.body.name
-  }
-  if (req.body.signedup != null) {
-    res.Users.signedup = req.body.signedup
-  }
-  try {
-    const updateUsers = await res.Users.save()
-    res.json(updateUsers)
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
-})
+    // Update a users w
+    app.patch('/users/:userId', users.update);
 
-// Deleting One
-router.delete('/:id', getUser, async (req, res) => {
-  try {
-    await res.Users.remove()
-    res.json({ message: 'Deleted Users' })
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-})
-
-async function getUser(req, res, next) {
-  let Users
-  try {
-    Users = await Users.findById(req.params.id)
-    if (Users == null) {
-      return res.status(404).json({ message: 'Cannot find Users' })
-    }
-  } catch (err) {
-    return res.status(500).json({ message: err.message })
-  }
-
-  res.Users = Users
-  next()
-}
+    // Delete a user 
+    app.delete('/users/:userId', users.delete);
 
 module.exports = router
