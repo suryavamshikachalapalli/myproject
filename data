@@ -14,3 +14,36 @@
 13: {name: "payment", value: "on"}
 14: {name: "payment", value: "on"}
 15: {name: "", value: "agree"
+
+
+
+
+<script type="text/javascript">
+  const form = document.getElementById('login-form')
+			form.addEventListener('submit', loginUser)
+
+			async function loginUser(event) {
+				event.preventDefault()
+				const email = document.getElementById('email').value
+				const password = document.getElementById('password').value
+
+				const result = await fetch('/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						email,
+          	password
+					})
+				}).then((res) => res.json())
+
+				if (result.status === 'ok') {
+					// everythign went fine
+					alert('Success')
+				} else {
+					alert(result.error)
+				}
+			} 
+</script>
+*/

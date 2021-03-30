@@ -217,9 +217,9 @@ function changeStep(btn) {
 } 
 ////////////////////////
 //const form = document.getElementById('signup-form')
-			form.addEventListener('next','submit')
+			form.addEventListener('next','submit', signupUser)
 
-			async function registerUser(event) {
+			async function signupUser(event) {
 				event.preventDefault()
 				const username = document.getElementById('username').value
 				const password = document.getElementById('password').value
@@ -242,5 +242,7 @@ function changeStep(btn) {
 					alert(result.error)
 				}
 			} 
+ ////
+ 
 </script>
 </html>
