@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>signup</title>
     <style>
         * {
   padding: 0;
@@ -191,7 +191,7 @@ prevBtn.forEach((button) => {
     changeStep("prev");
   });
 });
-
+/*
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const inputs = [];
@@ -201,7 +201,7 @@ form.addEventListener("submit", (e) => {
   });
   console.log(inputs);
   form.reset();
-});
+}); */
 
 function changeStep(btn) {
   let index = 0;
@@ -214,7 +214,33 @@ function changeStep(btn) {
     index--;
   }
   steps[index].classList.add("active");
-}
+} 
+////////////////////////
+//const form = document.getElementById('signup-form')
+			form.addEventListener('next','submit')
 
+			async function registerUser(event) {
+				event.preventDefault()
+				const username = document.getElementById('username').value
+				const password = document.getElementById('password').value
+
+				const result = await fetch('/signup', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						username,
+						password
+					})
+				}).then((res) => res.json())
+
+				if (result.status === 'ok') {
+					// everythign went fine
+					alert('Success')
+				} else {
+					alert(result.error)
+				}
+			} 
 </script>
 </html>

@@ -191,7 +191,10 @@ app.post('/signup', async(req,res)=>{
     }    */ 
        
 //})
-
+//logout
+//app.get('/logout', (req,res)=>{
+  //  res.render('logout')
+//})
 //APP LISTENING TO PORT
 
 const PORT = process.env.PORT || 3001;
