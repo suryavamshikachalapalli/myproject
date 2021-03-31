@@ -18,7 +18,7 @@
 
 
 
-<script type="text/javascript">
+<script>
   const form = document.getElementById('login-form')
 			form.addEventListener('submit', loginUser)
 

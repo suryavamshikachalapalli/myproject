@@ -13,16 +13,12 @@ const flash = require('express-flash')
 
 
 
-//APP INITILIZATION
+//////////////APP INITILIZATION
 const app = express();
 
-//auth
+//////////////////////////////auth
 require('./config/auth')
-
-
-//db :DATA BASE connction
-//require('./config/db')
-//require('./db/con')
+//////////////////database///////////////
 const passportLocalMongoose = require('passport-local-mongoose');
 mongooes.connect('mongodb://localhost:27017/app', 
 {
@@ -33,56 +29,60 @@ mongooes.connect('mongodb://localhost:27017/app',
 var db = mongooes.connection;
 db.on('error', () => console.log("Please check the connection"))
 db.once('open',() => console.log("Connected successfully")) 
-//model: schema collection 
+//////////////////model: schema collection ///////
 const User = require("./models/users");
- //body
+ ///////////////////body and cookie parser///////
  var bodyParser = require('body-parser')
-//json
+ ///const cookieParser = require('cookie-parser')
+
+//app.use(express.cookieParser());
+//app.use(express.bodyParser());
+//////////////////json////////////
 app.use(express.json());
-app.use(express.urlencoded({extended:false}))
-//passport PASPORT
-const Passport = require('./passport')
+
+////////////////passport PASPORT///////
+require('./passport')(passport)
 LocalStrategy = require("passport-local")
 
-
-/*initializePassport(passport, 
-    email => users.find(user => user.email === email),
-    id => users.find(users => user.id === id)) */
-
-
-// view engine , ejs
+// view engine , ejs , layouts///////
 app.use(expressLayouts)
 app.set('view engine' ,'ejs') 
 app.use(express.urlencoded({extended : false}))
-app.use(flash())
+///////////secret 
+
 app.use(session({
-    secret : process.env.SESSION_SECRET,
+    secret : 'secret',
     resave: true,
     saveUninitialized:false
 }))
 
-//passport
+////////////passport//////////
 app.use(passport.initialize())
 app.use(passport.session())
-/*
-passport.use(new LocalStrategy(user.authenticate()));
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
-*/
+app.use(flash())
+//passport.use(new LocalStrategy(User.authenticate()));
+//passport.use(User.createStrategy());
+//passport.serializeUser(User.serializeUser());
+//passport.deserializeUser(user.deserializeUser());
+
 ////////////////////////////////////routes
 app.get('/', (req,res)=>{
     res.render('home')
 })
 //login handler
 app.get('/login', (req,res)=>{
+    console.log("login")
     res.render('login')
+   // res.json({message: req.flash('loginMessage')});
 })
 
-app.post('/login', passport.authenticate('local',{
+app.post('/login', 
+passport.authenticate('local',{
     
     successRedirect:'/dashboard',
     failureRedirect:'/login',
-    failureFlash: true
+    failureFlash: true,
+    
 }),
 
 //res handler
@@ -130,94 +130,38 @@ app.get('/res', (req,res)=>{res.render('res') }),
                             return res.redirect('/login')
                          
                         })); 
-               //test validate         
+                       
 
-                                    
-                                    
 
-//sign handler
-/*
-app.get('/signup', (req,res)=>{
-    res.render('signup')
-})
-app.post('/signup', async(req,res)=>{
-    console.log('signup page')
-                     
 
-                    var data = {
-                        username: req.body.username,
-                        password: req.body.password,
-                        cpassword: req.body.cpassword,
-                        company: req.body.company,
-                        industry: req.body.industry,
-                        hear: req.body.hear,
-                        email: req.body.email,
-                        phone: req.body.phone,
-                        track: req.body.track,
-                        coupon: req.body.coupon, 
-                        uname: req.body.uname,
-                        address: req.body.address, 
-                        card: req.body.card
+   
 
-                    }
-                    db.collection('user').insertOne(data,(err,collection) => {
-                        if(err){
-                            throw err;
-                        }
-                        console.log("collection created with records")
-                    });
-                    return res.redirect('/login')
-                 }) */
-   /* try{
-     //creat users
-       const password = req.body.password
-       const cpassword = req.body.Retypepassword
+//Dashboard
 
-        
-            if (password === cpassword){ // validation 1
+//app.get('/dashboard', (req,res)=>{
+   // res.render('dashboard')
+//}) 
 
-               const user  = new User({
-                    username: req.body.username,
-                    password: password,
-                    password: cpassword,
-                    company: req.body.company,
-                    industry: req.body.industry,
-                    hear: req.body.hear,
-                    email: req.body.email,
-                    phone: req.body.phone,
-                    track: req.body.track, 
-                    coupon: req.body.coupon, 
-                    uname: req.body.uname, 
-                    address: req.body.address, 
-                    card: req.body.card, 
+app.get('/dashboard', isLoggedIn, (req, res) =>
+   {
+    res.json({user : req.user});
+  }); 
 
-            })
-         //   const app =  await  userSignup.save();//to save in db
-        const data =  await  user.save();//to save in db
-             res.status(201).redirect('/login') ;
-               console.log(req.body)   
-    } 
-    else{
-        req.send("Check ur password")
-    }
-} 
-    
-    catch(error){
-        res.status(400).redirect('/')   
-        console.log('error')
 
-    }    */ 
-       
-//})
 //logout
-//app.get('/logout', (req,res)=>{
-  //  res.render('logout')
-  app.get('/dashboard', (req,res)=>{
-    res.render('dashboard')
-})
+app.get('/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'You are logged out');
+    res.redirect('/');
+  });
 
+  function isLoggedIn(req, res, next){
+    if(req.isAuthenticated())
+    return next();
+    res.redirect('/');
+};
 
-
+//reset passpoers
 app.get('/reset', (req,res)=>{
     res.render('reset')
 })

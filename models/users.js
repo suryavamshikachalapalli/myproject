@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const bcrypt = require('bcryptjs')
 
 const userSchema  = new mongoose.Schema({
     username: {
@@ -73,11 +74,20 @@ const userSchema  = new mongoose.Schema({
 
     
     });
-//passport plugin
-userSchema.plugin(passportLocalMongoose);
+
 //collection
 const User = new mongoose.model("User", userSchema);
 //User  = mongoose.model('User', userSchema);
+//passport plugin
+userSchema.plugin(passportLocalMongoose);
 
-module.exports = User;
+userSchema.methods.generateHash = function(password){
+  return bcrypt.hashSync(password,bcrypt.genSaltSync(8),null);
+};
+userSchema.methods.validPassword = function(password){
+  return bcrypt.compareSync(password, this.password);
+};
+
+
+module.exports = mongoose.model("User", userSchema);
    

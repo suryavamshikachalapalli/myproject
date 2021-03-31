@@ -1,11 +1,11 @@
-const LocalStrategy = require('passport-local').Strategy
+//const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
-
+/*
 //user model
 const user = require('./models/users');
 
 module.exports = function(passport){ 
-    passport.use(
+    passport.use( // call to auth user email and password
         new LocalStrategy({usernameField:'email', passwordField:'password'},(email,password,done) => { //find user present or not
             user.findOne({
                 email:email
@@ -24,49 +24,73 @@ module.exports = function(passport){
 
             });
         })
-    );
-    passport.serializeUser(function(user, done){
-        done(null, user_id);
+    ); 
+
+    
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
     });
-    passport.deserializerUser(function(user_id,done){
-        user.findById(user_id, function(err,user){
-            done(err,null);
-        });
+    passport.deserializeUser(function(id,done){
+        User.findById(id, function(err,user){
+            done(err,user);
+        }); 
     });
 }
-/*
-
-function initialize(passport, getUserByEmail, getUserById) {
-  // call to authenticate email and password
-  // done : internal passportjs to authenticate user email and password
-    const authenticateUser =  async(email,password, done) => {
-      //get user and compare with password
-        const user = getUserByEmail(email)
-        if(user == null){
-            return done(null ,false, {message : "please register"})
-        }
-        try{
-            if (await bcryprt.compare(password, user.password)){
-            return done(null, user)
-        }
-        else{
-            return done(null, false ,{message: " please check password"})
-        }
-    }
-        catch(err){
-            return done(err)
-
-        }
-
-    }
-passport.use(new LocalStrategy({usernameField : 'email'}, authenticateUser))
-//takes 
-passport.serializeUser((user , done) => done(null, user.id ))
-passport.deserializeUser((id, done) => {
-     return login(null, getUserById(id))}
-
-)}
-
-
-module.exports = initialize
 */
+var LocalStrategy = require('passport-local').Strategy;
+const user = require('./models/users');
+module.exports = function(passport){
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser(function(id, done) {
+        User.findById(id, function(err, user) {
+            done(err, user);
+        });
+    });
+
+
+    passport.use('res',new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback:true
+    },
+        function(req,email, password, done) {
+            User.findOne({ email: email }, function(err, user) {
+            if (err) { return done(err); }
+            if (user) {
+                return done(null, false, req.flash('resMessage','Email is already exhisting! Please login...' ));
+            }else{
+                var newUser = new User();
+                newUser.email = email;
+                newUser.password = newUser.generateHash(password);
+                newUser.save(function(err){
+                if(err) throw err;
+                return done(null,newUser);
+            });
+            }
+            });
+    }));
+
+    passport.use('login',new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback:true
+    },
+        function(req,email, password, done) {
+            User.findOne({ email: email }, function(err, user) {
+            if (err) { return done(err); }
+            if (!user) {
+                return done(null, false, req.flash('loginMessage','Invalid mail id.' ));
+            }
+            if (!user.validPassword(password)) {
+                return done(null, false,  req.flash('loginMessage','Incorrect password !' ));
+            }
+            return done(null, user);
+            });
+        }
+    ));
+
+
+};
