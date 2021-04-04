@@ -20,7 +20,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: aliceblue;
+  background-color:#08ecbf;
 }
 .container {
   max-width: 400px;
@@ -28,7 +28,7 @@ section {
   padding: 20px;
   box-shadow: 0px 0px 20px #00000020;
   border-radius: 8px;
-  background-color: white;
+  background-color: whitesmoke;
 }
 .step {
   display: none;
@@ -57,7 +57,7 @@ button.submit-btn {
   padding: 10px 30px;
   border: none;
   outline: none;
-  background-color: rgb(242, 246, 250);
+  background-color: white(242, 246, 250);
   font-family: "Montserrat";
   font-size: 18px;
   cursor: pointer;
@@ -67,7 +67,7 @@ button.previous-btn {
   float: left;
 }
 button.submit-btn {
-  background-color: aquamarine;
+  background-color:white;
 }
 
     </style>
@@ -75,6 +75,7 @@ button.submit-btn {
 <body>
     <section>
         <div class="container">
+          <span>Already Member! <a href="/login">Login</a></span>
             
             <form  action="/res" method="POST" id="signup-form">
       
@@ -162,12 +163,16 @@ button.submit-btn {
 						I agree with <a href=""> tearms and conditions</a><br />
               
       
+            <div>
+              <button type="button" class="previous-btn" class="btn btn-success">Prev</button>
+              <button type="submit" class="submit-btn" class="btn btn-success">Submit</button>
+              
+
+            </div>
             
-              <button type="button" class="previous-btn">Prev</button>
-              <button type="submit" class="submit-btn">Submit</button>
             </div>
             <div>
-                <span>Already Member! <a href="/login">Login</a></span>
+                
             </div>
             
       

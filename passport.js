@@ -82,7 +82,7 @@ module.exports = function(passport){
             User.findOne({ email: email }, function(err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, req.flash('loginMessage','Invalid mail id.' ));
+                return done(null, false, req.flash('loginMessage','Invalide user' ));
             }
             if (!user.validPassword(password)) {
                 return done(null, false,  req.flash('loginMessage','Incorrect password !' ));

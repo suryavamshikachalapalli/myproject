@@ -6,7 +6,7 @@ const userSchema  = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        //unique: true
+        unique: true
       },
       password: {
         type: String,
@@ -14,61 +14,61 @@ const userSchema  = new mongoose.Schema({
       },
       Retypepassword: {
         type: String,
-        required: true
+      //  required: true
       },
       company: {
         type: String,
-        required: true
+       // required: true
       },
       industry: {
         type: String,
-        required: true
+        //required: true
       },
       hear: {
         type: String,
-        required: true
+        //required: true
       },
       
       email: {
         type: String,
         required: true,
-      //  unique: true
+       unique: true
       
       },
       phone: {
-        type: Number,
-        required: true,
-      //  unique: true
+        type: String,
+       // required: true,
+       //unique: true
       },
       track: {
         type: String,
-        required: true
+      //  required: true
       },
       coupon: {
         type: Number,
-        required: true
+     //   required: true
       },
       uname: {
         type: String,
-        required: true
+    //    required: true
       },
       address: {
         city:{
-        type: String,
-        required: true
+       type: String,
+      //  required: true
         },
         state:{
-          type: String,
-          required: true
+         type: String,
+        //  required: true
           },
           zip:{
             type: String,
-            required: true
+            //required: true
             }
       },
       card: {
         type: String,
-        required: true
+       // required: true
       },
 
 

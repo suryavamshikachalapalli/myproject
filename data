@@ -15,7 +15,45 @@
 14: {name: "payment", value: "on"}
 15: {name: "", value: "agree"
 
+css:
+    }
+  .footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   height: 10%;
+   background-color: #08ecbf;
+   color: white;
+   text-align: center;
+}
+.header {
+  position: fixed;
+   
+   width: 100%;
+   height: 25%;
+  text-align: center;
+  background:white;
+  color: white;
+ 
+}
+body {
+  font-family: "Montserrat";
+  padding:20px;
+  width: 100%;
+   height: 25%;
+  text-align: center;
+}
 
+  .content {
+  
+  padding:20px;
+  width: 100%;
+   height: 25%;
+  text-align: center;
+  
+  color:blue;
+}
 
 
 <script>
